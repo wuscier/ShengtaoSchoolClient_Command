@@ -1,0 +1,174 @@
+﻿<UserControl x:Class="St.InstantMeeting.InstantMeetingContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" 
+             d:DesignWidth="900"
+             FontSize="18"
+             >
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadMeetingListCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+  
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="1" Text="会议" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Left"></TextBlock>
+
+        <md:Card Grid.Row="1"
+                 Grid.Column="1"
+                                  Margin="0 8 0 0"
+                 >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <DockPanel
+                        HorizontalAlignment="Right"
+                        Margin="10"
+                            Width="350">
+                    <Button
+                        Command="{Binding CreateMeetingCommand}"
+                            Width="130"
+                            Height="32"
+                        Background="Transparent"
+                            >
+                        <StackPanel Orientation="Horizontal" Width="100">
+                                 <md:PackIcon Kind="Meteor" Height="30" Width="30" Margin="0 0 5 0" VerticalAlignment="Center"></md:PackIcon>
+                                <TextBlock Grid.Column="1" Text="召开会议" VerticalAlignment="Center"></TextBlock>
+                           
+                        </StackPanel>
+                    </Button>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        
+                        <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueMidBrush}" CornerRadius="2" Height="32">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Width="135"
+                                         Margin="3 0 3 0"
+                                         md:TextFieldAssist.DecorationVisibility="Collapsed"
+                                         BorderThickness="0"
+                         VerticalAlignment="Center"
+                         md:HintAssist.Hint="输入会议号参会"
+                         Text="{Binding MeetingId,UpdateSourceTrigger=PropertyChanged}"
+                         x:Name="meetingId"
+                                         FontSize="15"
+                         >
+
+                                </TextBox>
+                                
+                                <Button
+                        Command="{Binding JoinMeetingByNoCommand}"
+                                    
+                        IsDefault="True"
+                            Height="32" Width="60"
+                        >
+                                    <md:PackIcon Kind="ArrowRight" Height="30" Width="30" VerticalAlignment="Center"></md:PackIcon>
+                                </Button>
+
+                            </StackPanel>
+                        </Border>
+                       
+                    </StackPanel>
+                </DockPanel>
+
+                <Border Grid.Row="1"
+                    Background="{DynamicResource MaterialDesignDivider}"
+                    Height="1"
+                    HorizontalAlignment="Stretch"
+                    SnapsToDevicePixels="True"
+                    >
+
+                </Border>
+
+                <ListBox Grid.Row="2"
+                     Margin="10"
+                     ItemsSource="{Binding MeetingRecords}"
+                     x:Name="meetingList"
+                     >
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="Margin" Value="5"></Setter>
+                        </Style>
+                    </ListBox.Resources>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding ElementName=meetingList,Path=ActualWidth}"
+                              >
+                                <Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding CreatorPhoneId}"></TextBlock>
+                                <TextBlock Grid.Column="1"
+                                       Text="{Binding CreatorName}"
+                                       >
+
+                                </TextBlock>
+                                <TextBlock Grid.Column="2"
+                                       Text="{Binding MeetingNo}"
+                                       >
+
+                                </TextBlock>
+                                <TextBlock Grid.Column="3"
+                                       Text="{Binding StartTime}"
+                                       >
+
+                                </TextBlock>
+                                <Button Grid.Column="4"
+                                    Content="进入会议"
+                                    Command="{Binding JoinMeetingByListCommand}"
+                                    CommandParameter="{Binding MeetingNo}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    >
+
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+            </Grid>
+        </md:Card>
+
+        <md:Snackbar Grid.Row="2"
+                     Grid.Column="1"
+                         MessageQueue="{Binding MessageQueue}"
+                     >
+        </md:Snackbar>
+    </Grid>
+</UserControl>
+    

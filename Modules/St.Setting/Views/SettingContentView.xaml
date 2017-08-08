@@ -1,0 +1,515 @@
+﻿<UserControl x:Class="St.Setting.SettingContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:St.Setting"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" 
+             d:DesignWidth="300"
+             FontSize="18"
+             >
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSettingCommand}">
+
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type StackPanel}">
+                <Setter Property="Margin" Value="24 0 24 16"></Setter>
+            </Style>
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <Setter Property="FontWeight" Value="Light"></Setter>
+            </Style>
+
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="20"></Setter>
+            </Style>
+
+            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Style.Triggers>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+                        <Setter Property="Background" Value="{StaticResource PrimaryHueLightBrush}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <local:ConfigChangedItemConverter x:Key="ConfigChangedItemConverter"></local:ConfigChangedItemConverter>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>     
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="1">
+            <TextBlock Grid.Column="1" Text="设置" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Left"></TextBlock>
+            <Button HorizontalAlignment="Right" ToolTip="刷新" Command="{Binding LoadSettingCommand}">
+                <md:PackIcon Kind="Refresh"></md:PackIcon>
+            </Button>
+        </DockPanel>
+
+        <md:Card Grid.Row="1"
+                 Grid.Column="1"
+                 Background="{StaticResource MaterialDesignBackground}" Margin="0 8 0 0">
+
+            <StackPanel Margin="0">
+                <Expander IsExpanded="{Binding IsMainCameraExpanded}">
+                    <Expander.Header>
+                        <TextBlock Text="人像摄像头"
+                                   >
+                        </TextBlock>
+                    </Expander.Header>
+                    <StackPanel>
+                        <ComboBox x:Name="mainCamera"
+                                  ItemsSource="{Binding MainCameras}"
+                                  SelectedItem="{Binding MeetingConfigResult.MainCamera.Name}"
+                                  Tag="{Binding ConfigItemTag.MainCamera}"
+                                  md:HintAssist.Hint="设备"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="mainCamera" Path="Tag"></Binding>
+                                                <Binding ElementName="mainCamera" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+
+                        <ComboBox x:Name="mainCameraResolution"
+                                  ItemsSource="{Binding MeetingConfigParameter.UserCameraSetting.ResolutionList}"
+                                  SelectedItem="{Binding MeetingConfigResult.MainCamera.Resolution}"
+                                  Tag="{Binding ConfigItemTag.MainCameraResolution}"
+                                  md:HintAssist.Hint="分辨率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="mainCameraResolution" Path="Tag"></Binding>
+                                                <Binding ElementName="mainCameraResolution" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="mainCameraCodeRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.UserCameraSetting.BitRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.MainCamera.CodeRate}"
+                                  Tag="{Binding ConfigItemTag.MainCameraCodeRate}"
+                                  md:HintAssist.Hint="码率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="mainCameraCodeRate" Path="Tag"></Binding>
+                                                <Binding ElementName="mainCameraCodeRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                    </StackPanel>
+                </Expander>
+                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                <Expander IsExpanded="{Binding IsSecondaryCameraExpanded}">
+                    <Expander.Header>
+                        <TextBlock Text="数据摄像头"
+                                   >
+                        </TextBlock>
+                    </Expander.Header>
+                    <StackPanel>
+                        <ComboBox x:Name="secondaryCamera"
+                                  ItemsSource="{Binding SecondaryCameras}"
+                                  SelectedItem="{Binding MeetingConfigResult.SecondaryCamera.Name}"
+                                  Tag="{Binding ConfigItemTag.SecondaryCamera}"
+                                  md:HintAssist.Hint="设备"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="secondaryCamera" Path="Tag"></Binding>
+                                                <Binding ElementName="secondaryCamera" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+
+                        <ComboBox x:Name="secondaryCameraResolution"
+                                  ItemsSource="{Binding MeetingConfigParameter.DataCameraSetting.ResolutionList}"
+                                  SelectedItem="{Binding MeetingConfigResult.SecondaryCamera.Resolution}"
+                                  Tag="{Binding ConfigItemTag.SecondaryCameraResolution}"
+                                  md:HintAssist.Hint="分辨率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="secondaryCameraResolution" Path="Tag"></Binding>
+                                                <Binding ElementName="secondaryCameraResolution" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="secondaryCameraCodeRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.DataCameraSetting.BitRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.SecondaryCamera.CodeRate}"
+                                  Tag="{Binding ConfigItemTag.SecondaryCameraCodeRate}"
+                                  md:HintAssist.Hint="码率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="secondaryCameraCodeRate" Path="Tag"></Binding>
+                                                <Binding ElementName="secondaryCameraCodeRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+                    </StackPanel>
+                </Expander>
+                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                <Expander IsExpanded="{Binding IsAudioExpanded}">
+                    <Expander.Header>
+                        <TextBlock Text="音 频"
+                                   >
+                        </TextBlock>
+                    </Expander.Header>
+                    <StackPanel>
+                        <ComboBox x:Name="mainMicrophone"
+                                  ItemsSource="{Binding MainMicrophones}"
+                                  SelectedItem="{Binding MeetingConfigResult.AudioConfig.MainMicrophone}"
+                                  Tag="{Binding ConfigItemTag.MainMicrophone}"
+                                  md:HintAssist.Hint="人像麦克风"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="mainMicrophone" Path="Tag"></Binding>
+                                                <Binding ElementName="mainMicrophone" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="secondaryMicrophone"
+                                  ItemsSource="{Binding SecondaryMicrophones}"
+                                  SelectedItem="{Binding MeetingConfigResult.AudioConfig.SecondaryMicrophone}"
+                                  Tag="{Binding ConfigItemTag.SecondaryMicrophone}"
+                                  md:HintAssist.Hint="数据麦克风"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="secondaryMicrophone" Path="Tag"></Binding>
+                                                <Binding ElementName="secondaryMicrophone" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+
+                        <ComboBox x:Name="speaker"
+                                  ItemsSource="{Binding Speakers}"
+                                  SelectedItem="{Binding MeetingConfigResult.AudioConfig.Speaker}"
+                                  Tag="{Binding ConfigItemTag.Speaker}"
+                                  md:HintAssist.Hint="扬声器"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="speaker" Path="Tag"></Binding>
+                                                <Binding ElementName="speaker" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="audioSampleRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.Audio.SampleRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.AudioConfig.SampleRate}"
+                                  Tag="{Binding ConfigItemTag.AudioSampleRate}"
+                                  md:HintAssist.Hint="采样率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="audioSampleRate" Path="Tag"></Binding>
+                                                <Binding ElementName="audioSampleRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="audioCodeRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.Audio.BitRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.AudioConfig.CodeRate}"
+                                  Tag="{Binding ConfigItemTag.AudioCodeRate}"
+                                  md:HintAssist.Hint="码率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="audioCodeRate" Path="Tag"></Binding>
+                                                <Binding ElementName="audioCodeRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+                    </StackPanel>
+                </Expander>
+                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                <Expander IsExpanded="{Binding IsLiveExpanded}">
+                    <Expander.Header>
+                        <TextBlock Text="手动直播"
+                                   >
+                        </TextBlock>
+                    </Expander.Header>
+                    <StackPanel>
+                        <ComboBox x:Name="liveResolution"
+                                  ItemsSource="{Binding MeetingConfigParameter.Live.ResolutionList}"
+                                  SelectedItem="{Binding MeetingConfigResult.LocalLiveConfig.Resolution}"
+                                  Tag="{Binding ConfigItemTag.LiveResolution}"
+                                  md:HintAssist.Hint="分辨率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="liveResolution" Path="Tag"></Binding>
+                                                <Binding ElementName="liveResolution" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="liveCodeRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.Live.BitRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.LocalLiveConfig.CodeRate}"
+                                  Tag="{Binding ConfigItemTag.LiveCodeRate}"
+                                  md:HintAssist.Hint="码率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="liveCodeRate" Path="Tag"></Binding>
+                                                <Binding ElementName="liveCodeRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <TextBox md:HintAssist.Hint="推流地址" Text="{Binding Path=MeetingConfigResult.LocalLiveConfig.PushLiveStreamUrl,UpdateSourceTrigger=PropertyChanged}" Margin="0 10 0 0" Foreground="{Binding LiveUrlColor}"
+                                 >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding LiveUrlChangedCommand}">
+
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Expander>
+                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                <Expander IsExpanded="{Binding IsServerLiveExpanded}">
+                    <Expander.Header>
+                        <TextBlock Text="自动直播"
+                                   >
+                        </TextBlock>
+                    </Expander.Header>
+                    <StackPanel>
+                        <ComboBox x:Name="liveServerResolution"
+                                  ItemsSource="{Binding MeetingConfigParameter.Live.ResolutionList}"
+                                  SelectedItem="{Binding MeetingConfigResult.RemoteLiveConfig.Resolution}"
+                                  Tag="{Binding ConfigItemTag.LiveResolution}"
+                                  md:HintAssist.Hint="分辨率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="liveServerResolution" Path="Tag"></Binding>
+                                                <Binding ElementName="liveServerResolution" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="liveServerCodeRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.Live.BitRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.RemoteLiveConfig.CodeRate}"
+                                  Tag="{Binding ConfigItemTag.LiveCodeRate}"
+                                  md:HintAssist.Hint="码率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="liveServerCodeRate" Path="Tag"></Binding>
+                                                <Binding ElementName="liveServerCodeRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+                    </StackPanel>
+                </Expander>
+                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                <Expander IsExpanded="{Binding IsRecordExpanded}">
+                    <Expander.Header>
+                        <TextBlock Text="本地录制"
+                                   >
+                        </TextBlock>
+                    </Expander.Header>
+                    <StackPanel>
+                        <ComboBox x:Name="recordResolution"
+                                  ItemsSource="{Binding MeetingConfigParameter.Live.ResolutionList}"
+                                  SelectedItem="{Binding MeetingConfigResult.RecordConfig.Resolution}"
+                                  Tag="{Binding ConfigItemTag.LiveResolution}"
+                                  md:HintAssist.Hint="分辨率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="recordResolution" Path="Tag"></Binding>
+                                                <Binding ElementName="recordResolution" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <ComboBox x:Name="recordCodeRate"
+                                  ItemsSource="{Binding MeetingConfigParameter.Live.BitRateList}"
+                                  SelectedItem="{Binding MeetingConfigResult.RecordConfig.CodeRate}"
+                                  Tag="{Binding ConfigItemTag.LiveCodeRate}"
+                                  md:HintAssist.Hint="码率"
+                                  >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ConfigItemChangedCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource ConfigChangedItemConverter}">
+                                                <Binding ElementName="recordCodeRate" Path="Tag"></Binding>
+                                                <Binding ElementName="recordCodeRate" Path="SelectedItem"></Binding>
+                                            </MultiBinding>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </ComboBox>
+
+                        <TextBox IsReadOnly="True" md:HintAssist.Hint="双击选择录制路径" Text="{Binding MeetingConfigResult.RecordConfig.RecordPath}" Margin="0 10 0 0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding SelectRecordPathCommand}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                    </StackPanel>
+                </Expander>
+
+            </StackPanel>
+        </md:Card>
+
+        <TextBox md:TextFieldAssist.DecorationVisibility="Collapsed" BorderThickness="0" IsReadOnly="True" x:Name="TbSerialNo" Focusable="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom"></TextBox>
+        <md:Snackbar Grid.Row="2"
+                     Grid.Column="1"
+                     MessageQueue="{Binding MessageQueue}"
+                     Focusable="False"
+                     >
+ 
+        </md:Snackbar>
+    </Grid>
+</UserControl>

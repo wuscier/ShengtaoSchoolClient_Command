@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="St.CollaborativeInfo.CollaborativeInfoContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:common="clr-namespace:St.Common;assembly=St.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+             FontSize="18"
+             Focusable="False">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <common:DateToStringConverter x:Key="DateToStringConverter"></common:DateToStringConverter>
+            <common:StudyTypeToStringConverter x:Key="StudyTypeToStringConverter"></common:StudyTypeToStringConverter>
+            <common:BoolToStringConverter x:Key="BoolToStringConverter"></common:BoolToStringConverter>
+            <common:OnlineStatusConverter x:Key="OnlineStatusConverter"></common:OnlineStatusConverter>
+            <common:LessonTypeToStringConverter x:Key="LessonTypeToStringConverter"></common:LessonTypeToStringConverter>
+            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Style.Triggers>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+                        <Setter Property="Background" Value="{StaticResource PrimaryHueLightBrush}"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+        <Grid Focusable="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="1" Focusable="False">
+            <TextBlock Text="{x:Static common:GlobalResources.CollaborativeInfo}" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Left" Focusable="False"></TextBlock>
+            <Button HorizontalAlignment="Right" ToolTip="刷新" Command="{Binding RefreshCommand}">
+                <md:PackIcon Kind="Refresh"></md:PackIcon>
+            </Button>
+        </DockPanel>
+
+        <md:Card Grid.Row="1"
+                 Grid.Column="1" Background="{StaticResource MaterialDesignBackground}"
+                 VerticalAlignment="Stretch"
+                                  Margin="0 8 0 0"
+                 Focusable="False"
+                 >
+
+                <DataGrid x:Name="GridInteractiveLessons"
+                      CanUserAddRows="False"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      ClipboardCopyMode="None"
+                      FontSize="15"
+                      ColumnWidth="Auto"
+                          VerticalScrollBarVisibility="Visible"
+                      ItemsSource="{Binding Lessons}"
+                      SelectedItem="{Binding SelectedLesson}"
+                          Focusable="False"
+                          SelectionMode="Single">
+                    <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MaterialDesignDataGridRow}">
+                        <Setter Property="Focusable" Value="False"></Setter>
+                        <EventSetter Event="PreviewLostKeyboardFocus" Handler="PreviewLostKeyboardFocusHanlder"></EventSetter>
+                        <EventSetter Event="PreviewGotKeyboardFocus" Handler="PreviewGotKeyboardFocusHanlder"></EventSetter>
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="PreviewMouseLeftButtonDownHandler"></EventSetter>
+                    </Style>
+                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource MaterialDesignDataGridCell}">
+                            <Setter Property="BorderThickness" Value="0"></Setter>
+                            <Setter Property="Focusable" Value="False"></Setter>
+                        </Style>
+                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                        <Setter Property="Focusable" Value="False"></Setter>
+                    </Style>
+                    <Style TargetType="{x:Type md:ListSortDirectionIndicator}">
+                        <Setter Property="Focusable" Value="False"></Setter>
+                    </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="课名">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn  Header="主讲人">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Teacher}"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="课程类型">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding LessonType,Converter={StaticResource LessonTypeToStringConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn  Header="发言模式">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding StudyType,Converter={StaticResource StudyTypeToStringConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="开始时间">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding StartTime,Converter={StaticResource DateToStringConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="结束时间">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding EndTime,Converter={StaticResource DateToStringConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="GotoButton" Content="点击前往" Command="{Binding GotoLessonTypeCommand}"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+               
+        </md:Card>
+        
+        <md:Snackbar Grid.Row="2"
+                     Grid.Column="1"
+                     MessageQueue="{Binding MessageQueue}"
+                     Focusable="False"
+                     >
+            </md:Snackbar>
+        </Grid>
+</UserControl>

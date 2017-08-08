@@ -1,0 +1,34 @@
+﻿<mah:MetroWindow x:Class="St.Host.Views.DemoView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:St.Host.Views"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:prims="http://prismlibrary.com/"
+        xmlns:viewModels="clr-namespace:St.Host.ViewModels"
+        prims:ViewModelLocator.AutoWireViewModel="True"
+        cal:Bind.Model="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=Self}}"
+        mc:Ignorable="d"
+        Title="DemoView" Height="300" Width="640">
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBox x:Name="Name" Height="26" Width="120" BorderThickness="1" BorderBrush="Silver"></TextBox>
+            <Button x:Name="Save" Content="保存"></Button>
+            <Button x:Name="aaaa" Content="保存2" cal:Message.Attach="[Event Click] = [Action Save2('aaaa', Name.Text)]"></Button>
+            <Button x:Name="Save3" Content="保存3"></Button>
+            <Button x:Name="SetContent" Content="设置内容"></Button>
+        </StackPanel>
+        <ContentControl x:Name="ContentCtrl" Grid.Row="1" Margin="20"></ContentControl>
+    </Grid>
+</mah:MetroWindow>
+

@@ -1,0 +1,289 @@
+﻿<mah:MetroWindow x:Class="St.Meeting.MeetingView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                 xmlns:behaviors="clr-namespace:St.Common.Behavior;assembly=St.Common"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:commands="clr-namespace:St.Common.Commands;assembly=St.Common"
+        mc:Ignorable="d"
+                 MinHeight="600"
+                 MinWidth="900"
+                 Height="600"
+                 Width="1000"
+        FontSize="18"
+                 UseNoneWindowStyle="True"
+                 WindowStartupLocation="CenterScreen"
+                 WindowStyle="None"
+                 ResizeMode="NoResize"
+                 WindowState="Maximized"
+                 IgnoreTaskbarOnMaximize="True"
+                 Topmost="{Binding IsTopMost}"
+                 IsWindowDraggable="False"
+                 Background="Black"
+                 >
+    <FrameworkElement.InputBindings>
+        <KeyBinding Key="T" Modifiers="Alt" Command="{Binding TopMostTriggerCommand}"></KeyBinding>
+        <KeyBinding Key="L" Modifiers="Alt" Command="{Binding ShowLogCommand}"></KeyBinding>
+        <KeyBinding Key="H" Modifiers="Alt" Command="{Binding ShowHelpCommand}"></KeyBinding>
+
+        <KeyBinding Key="F" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=ExitClassCommand}"></KeyBinding>
+        <KeyBinding Key="G" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=SpeakCommand}"></KeyBinding>
+        <KeyBinding Key="I" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=DocCommand}"></KeyBinding>
+        <KeyBinding Key="J" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=RecordCommand}"></KeyBinding>
+        <KeyBinding Key="K" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=PushLiveCommand}"></KeyBinding>
+        <KeyBinding Key="M" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=AverageCommand}"></KeyBinding>
+        <KeyBinding Key="N" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=BigSmallsCommand}"></KeyBinding>
+        <KeyBinding Key="O" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=CloseupCommand}"></KeyBinding>
+        <KeyBinding Key="P" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=InteractionCommand}"></KeyBinding>
+        <KeyBinding Key="Q" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=SpeakerCommand}"></KeyBinding>
+        <KeyBinding Key="R" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=ShareCommand}"></KeyBinding>
+    </FrameworkElement.InputBindings>
+
+    <i:Interaction.Behaviors>
+        <behaviors:KeyDownBehavior KeyDownCommand="{Binding WindowKeyDownCommand}"></behaviors:KeyDownBehavior>
+    </i:Interaction.Behaviors>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
+
+            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+                <Setter Property="Width" Value="70"></Setter>
+            </Style>
+
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
+        </ResourceDictionary>
+        
+        
+    </Window.Resources>
+    
+  
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <!--<md:DialogHost IsOpen="{Binding IsDialogOpen}"
+                   DialogContent="{Binding DialogContent}"
+                   >-->
+        <Grid>
+            <Grid x:Name="ViewItemsContainer">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <WindowsFormsHost VerticalAlignment="{Binding ViewFrame1.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame1.HorizontalAlignment}" Width="{Binding ViewFrame1.Width}" Height="{Binding ViewFrame1.Height}" Background="Black"  Grid.Row="{Binding ViewFrame1.Row}" Grid.RowSpan="{Binding ViewFrame1.RowSpan}" Grid.Column="{Binding ViewFrame1.Column}" Grid.ColumnSpan="{Binding ViewFrame1.ColumnSpan}" Visibility="{Binding ViewFrame1.Visibility}">
+                    <forms:Panel x:Name="Panel1" Dock="Fill" ></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost VerticalAlignment="{Binding ViewFrame2.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame2.HorizontalAlignment}"  Width="{Binding ViewFrame2.Width}"  Height="{Binding ViewFrame2.Height}" Background="Black"  Grid.Row="{Binding ViewFrame2.Row}" Grid.RowSpan="{Binding ViewFrame2.RowSpan}" Grid.Column="{Binding ViewFrame2.Column}" Grid.ColumnSpan="{Binding ViewFrame2.ColumnSpan}"  Visibility="{Binding ViewFrame2.Visibility}">
+                    <forms:Panel x:Name="Panel2" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost VerticalAlignment="{Binding ViewFrame3.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame3.HorizontalAlignment}"  Width="{Binding ViewFrame3.Width}" Height="{Binding ViewFrame3.Height}"  Background="Black"  Grid.Row="{Binding ViewFrame3.Row}" Grid.RowSpan="{Binding ViewFrame3.RowSpan}" Grid.Column="{Binding ViewFrame3.Column}" Grid.ColumnSpan="{Binding ViewFrame3.ColumnSpan}"  Visibility="{Binding ViewFrame3.Visibility}">
+                    <forms:Panel x:Name="Panel3" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost  VerticalAlignment="{Binding ViewFrame4.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame4.HorizontalAlignment}"   Width="{Binding ViewFrame4.Width}" Height="{Binding ViewFrame4.Height}" Background="Black"  Grid.Row="{Binding ViewFrame4.Row}" Grid.RowSpan="{Binding ViewFrame4.RowSpan}" Grid.Column="{Binding ViewFrame4.Column}"  Grid.ColumnSpan="{Binding ViewFrame4.ColumnSpan}" Visibility="{Binding ViewFrame4.Visibility}">
+                    <forms:Panel x:Name="Panel4" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost  VerticalAlignment="{Binding ViewFrame5.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame5.HorizontalAlignment}"  Width="{Binding ViewFrame5.Width}"  Height="{Binding ViewFrame5.Height}" Background="Black" Grid.Row="{Binding ViewFrame5.Row}" Grid.RowSpan="{Binding ViewFrame5.RowSpan}" Grid.Column="{Binding ViewFrame5.Column}" Grid.ColumnSpan="{Binding ViewFrame5.ColumnSpan}"  Visibility="{Binding ViewFrame5.Visibility}">
+                    <forms:Panel x:Name="Panel5" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+
+            </Grid>
+            
+            <Popup x:Name="TopMenu" IsOpen="{Binding IsMenuOpen}" Placement="Top" PlacementTarget="{Binding ElementName=ViewItemsContainer}" Height="50" Width="{Binding ElementName=ViewItemsContainer,Path=ActualWidth}" VerticalOffset="50">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding MeetingOrLesson}"></TextBlock>
+                        <TextBlock Text="{Binding MeetingId}"></TextBlock>
+                        <TextBlock Margin="15 0 0 0" Text="{Binding LessonName}"></TextBlock>
+                        <!--<TextBlock Margin="15 0 0 0" Text="{Binding SelfDescription}"></TextBlock>-->
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding IsSpeaker}">
+                            <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueMidBrush}" CornerRadius="2" Margin="5" Height="{Binding ElementName=ExitButton,Path=ActualHeight}">
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding PushLiveStreamTips}">
+                                    <TextBlock>推流</TextBlock>
+                                    <ToggleButton IsChecked="{Binding PushLiveChecked}" Command="{Binding PushLiveCommand}" Width="50">
+                                    </ToggleButton>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+
+                        <Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueMidBrush}" CornerRadius="2" Margin="5" Height="{Binding ElementName=ExitButton,Path=ActualHeight}">
+                            <StackPanel Orientation="Horizontal" ToolTip="{Binding RecordTips}">
+                                <TextBlock>录制</TextBlock>
+                                <ToggleButton IsChecked="{Binding RecordChecked}" Command="{Binding RecordCommand}" Width="50">
+                                </ToggleButton>
+                            </StackPanel>
+                        </Border>
+
+
+                        <Button Margin="10 5 5 5" x:Name="ExitButton" Content="退 出"
+                    Command="{Binding OpenExitDialogCommand}"
+                    >
+                        </Button>
+
+
+                    </StackPanel>
+                </DockPanel>
+            </Popup>
+
+
+            <Popup x:Name="BottomMenu" IsOpen="{Binding IsMenuOpen}" Placement="Bottom" PlacementTarget="{Binding ElementName=ViewItemsContainer}" Height="50" Width="{Binding ElementName=ViewItemsContainer,Path=ActualWidth}" VerticalOffset="-50">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <DockPanel>
+                        <Menu FontSize="18">
+                            <MenuItem 
+                          ItemsSource="{Binding ModeMenuItems}"
+                          >
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal"
+                                            Margin="10"
+                                            >
+                                        <TextBlock Text="{Binding CurModeName}"
+                                               VerticalAlignment="Center">
+
+                                        </TextBlock>
+                                        <md:PackIcon Kind="ChevronDown" Height="30" Width="30"></md:PackIcon>
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </Menu>
+                        <Menu FontSize="18">
+
+                            <MenuItem 
+                            x:Name="LayoutMenu"
+                          ItemsSource="{Binding LayoutMenuItems}"
+                          >
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal"
+                                            Margin="10"
+                                            >
+                                        <TextBlock Text="{Binding CurLayoutName}"
+                                               VerticalAlignment="Center">
+
+                                        </TextBlock>
+                                        <md:PackIcon Kind="ChevronDown" Height="30" Width="30"></md:PackIcon>
+                                    </StackPanel>
+                                </MenuItem.Header>
+                            </MenuItem>
+                        </Menu>
+
+                    </DockPanel>
+
+                    <md:Snackbar Grid.Column="1"
+                     MessageQueue="{Binding MessageQueue}"
+                         >
+                    </md:Snackbar>
+
+                    <DockPanel Grid.Column="2"
+                         >
+                        <Grid Visibility="{Binding IsSpeaker}"
+                          >
+                            <Button Visibility="{Binding CancelSharingVisibility}"
+                                Command="{Binding CancelSharingCommand}"
+                                Content="取消共享">
+
+                            </Button>
+
+                            <Menu Visibility="{Binding SharingVisibility}" FontSize="18"
+                              >
+                                <MenuItem
+                                  ItemsSource="{Binding SharingMenuItems}"
+                                  >
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Horizontal"
+                                                Margin="10">
+                                            <TextBlock Text="共享"
+                                                       VerticalAlignment="Center"
+                                                   ></TextBlock>
+                                            <md:PackIcon Kind="ChevronDown"
+                                                         VerticalAlignment="Center"
+                                                     Height="30"
+                                                     Width="30"></md:PackIcon>
+                                        </StackPanel>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </Menu>
+
+                        </Grid>
+                        <Button Content="{Binding SpeakingStatus,UpdateSourceTrigger=PropertyChanged}"
+                            Width="100"
+                            Command="{Binding SpeakingStatusChangedCommand}"
+                            IsEnabled="{Binding AllowedToSpeak}"
+                            Grid.Column="1">
+
+                        </Button>
+                    </DockPanel>
+                </Grid>
+            </Popup>
+        </Grid>
+    <!--</md:DialogHost>-->
+    
+</mah:MetroWindow>

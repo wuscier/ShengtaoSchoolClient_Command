@@ -1,0 +1,242 @@
+﻿<mah:MetroWindow x:Class="St.Discussion.DiscussionClassView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                 xmlns:behaviors="clr-namespace:St.Common.Behavior;assembly=St.Common"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:commands="clr-namespace:St.Common.Commands;assembly=St.Common"
+        mc:Ignorable="d"
+                 MinHeight="600"
+                 MinWidth="900"
+                 Height="600"
+                 Width="1000"
+        FontSize="35"
+                 UseNoneWindowStyle="True"
+                 WindowStartupLocation="CenterScreen"
+                 WindowStyle="None"
+                     WindowState="Maximized"
+    IsWindowDraggable="False"
+    ResizeMode="NoResize"
+
+
+    IgnoreTaskbarOnMaximize="True"
+                 Topmost="{Binding IsTopMost}"
+                 Background="Black"
+                 >
+
+    <FrameworkElement.InputBindings>
+        <KeyBinding Key="T" Modifiers="Alt" Command="{Binding TopMostTriggerCommand}"></KeyBinding>
+        <KeyBinding Key="L" Modifiers="Alt" Command="{Binding ShowLogCommand}"></KeyBinding>
+        <KeyBinding Key="H" Modifiers="Alt" Command="{Binding ShowHelpCommand}"></KeyBinding>
+
+        <KeyBinding Key="F" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=ExitClassCommand}"></KeyBinding>
+        <KeyBinding Key="G" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=SpeakCommand}"></KeyBinding>
+        <KeyBinding Key="I" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=DocCommand}"></KeyBinding>
+        <KeyBinding Key="J" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=RecordCommand}"></KeyBinding>
+        <KeyBinding Key="K" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=PushLiveCommand}"></KeyBinding>
+        <KeyBinding Key="M" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=AverageCommand}"></KeyBinding>
+        <KeyBinding Key="N" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=BigSmallsCommand}"></KeyBinding>
+        <KeyBinding Key="O" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=CloseupCommand}"></KeyBinding>
+        <KeyBinding Key="P" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=InteractionCommand}"></KeyBinding>
+        <KeyBinding Key="Q" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=SpeakerCommand}"></KeyBinding>
+        <KeyBinding Key="R" Modifiers="Alt" Command="{Binding Source={x:Static commands:GlobalCommands.Instance},Path=ShareCommand}"></KeyBinding>
+
+    </FrameworkElement.InputBindings>
+
+
+    <i:Interaction.Behaviors>
+        <behaviors:KeyDownBehavior KeyDownCommand="{Binding WindowKeyDownCommand}"></behaviors:KeyDownBehavior>
+    </i:Interaction.Behaviors>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                
+                <ResourceDictionary Source="Dictionary.xaml">
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+        
+        
+    </Window.Resources>
+    
+  
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+        <!--<i:EventTrigger EventName="PreviewTouchDown">
+            <i:InvokeCommandAction Command="{Binding TouchDownCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>-->
+    </i:Interaction.Triggers>
+
+        <Grid>
+            <Grid x:Name="ViewItemsContainer">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <WindowsFormsHost FontSize="18" VerticalAlignment="{Binding ViewFrame1.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame1.HorizontalAlignment}" Width="{Binding ViewFrame1.Width}" Height="{Binding ViewFrame1.Height}" Background="Black"  Grid.Row="{Binding ViewFrame1.Row}" Grid.RowSpan="{Binding ViewFrame1.RowSpan}" Grid.Column="{Binding ViewFrame1.Column}" Grid.ColumnSpan="{Binding ViewFrame1.ColumnSpan}" Visibility="{Binding ViewFrame1.Visibility}">
+                    <forms:Panel x:Name="Panel1" Dock="Fill" ></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost FontSize="18"  VerticalAlignment="{Binding ViewFrame2.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame2.HorizontalAlignment}"  Width="{Binding ViewFrame2.Width}"  Height="{Binding ViewFrame2.Height}" Background="Black"  Grid.Row="{Binding ViewFrame2.Row}" Grid.RowSpan="{Binding ViewFrame2.RowSpan}" Grid.Column="{Binding ViewFrame2.Column}" Grid.ColumnSpan="{Binding ViewFrame2.ColumnSpan}"  Visibility="{Binding ViewFrame2.Visibility}">
+                    <forms:Panel x:Name="Panel2" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost FontSize="18"  VerticalAlignment="{Binding ViewFrame3.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame3.HorizontalAlignment}"  Width="{Binding ViewFrame3.Width}" Height="{Binding ViewFrame3.Height}"  Background="Black"  Grid.Row="{Binding ViewFrame3.Row}" Grid.RowSpan="{Binding ViewFrame3.RowSpan}" Grid.Column="{Binding ViewFrame3.Column}" Grid.ColumnSpan="{Binding ViewFrame3.ColumnSpan}"  Visibility="{Binding ViewFrame3.Visibility}">
+                    <forms:Panel x:Name="Panel3" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost FontSize="18"   VerticalAlignment="{Binding ViewFrame4.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame4.HorizontalAlignment}"   Width="{Binding ViewFrame4.Width}" Height="{Binding ViewFrame4.Height}" Background="Black"  Grid.Row="{Binding ViewFrame4.Row}" Grid.RowSpan="{Binding ViewFrame4.RowSpan}" Grid.Column="{Binding ViewFrame4.Column}"  Grid.ColumnSpan="{Binding ViewFrame4.ColumnSpan}" Visibility="{Binding ViewFrame4.Visibility}">
+                    <forms:Panel x:Name="Panel4" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+                <WindowsFormsHost FontSize="18"   VerticalAlignment="{Binding ViewFrame5.VerticalAlignment}" HorizontalAlignment="{Binding ViewFrame5.HorizontalAlignment}"  Width="{Binding ViewFrame5.Width}"  Height="{Binding ViewFrame5.Height}" Background="Black" Grid.Row="{Binding ViewFrame5.Row}" Grid.RowSpan="{Binding ViewFrame5.RowSpan}" Grid.Column="{Binding ViewFrame5.Column}" Grid.ColumnSpan="{Binding ViewFrame5.ColumnSpan}"  Visibility="{Binding ViewFrame5.Visibility}">
+                    <forms:Panel x:Name="Panel5" Dock="Fill"></forms:Panel>
+                </WindowsFormsHost>
+
+
+            </Grid>
+            
+            <Popup x:Name="TopMenu" IsOpen="{Binding IsMenuOpen}" Placement="Top" PlacementTarget="{Binding ElementName=ViewItemsContainer}" Height="110" Width="{Binding ElementName=ViewItemsContainer,Path=ActualWidth}" VerticalOffset="110">
+                <DockPanel Background="{StaticResource MaterialDesignPaper}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="20 20 5 20" Text="{Binding MeetingOrLesson}"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="5 20 20 20" Text="{Binding MeetingId}"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="20" Text="{Binding ClassMode}"></TextBlock>
+                    </StackPanel>
+
+                    
+                    <Viewbox HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal">
+                            <!--<Border BorderThickness="1" BorderBrush="{StaticResource PrimaryHueMidBrush}"  CornerRadius="2" Margin="20" Height="{Binding ElementName=ExitButton,Path=ActualHeight}">
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding RecordTips}">
+                                    <TextBlock Margin="10 10 5 10" VerticalAlignment="Center">录制</TextBlock>
+                                    <ToggleButton IsChecked="{Binding RecordChecked}" Command="{Binding RecordCommand}" Margin="5 10 10 10" Width="50" VerticalAlignment="Center">
+                                    </ToggleButton>
+                                </StackPanel>
+                            </Border>-->
+
+                            <Button Command="{Binding RecordCommand}" x:Name="RecordButton" ToolTip="{Binding RecordTips}" Content="{Binding RecordMsg}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding UpButtonGotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                            <Button Margin="20" x:Name="ExitButton" Content="退 出"
+                    Command="{Binding OpenExitDialogCommand}"
+                    >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding UpButtonGotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                        </StackPanel>
+                    </Viewbox>
+                </DockPanel>
+                
+            </Popup>
+
+
+            <Popup x:Name="BottomMenu" IsOpen="{Binding IsMenuOpen}" Placement="Bottom" PlacementTarget="{Binding ElementName=ViewItemsContainer}" Height="110" Width="{Binding ElementName=ViewItemsContainer,Path=ActualWidth}" VerticalOffset="-110">
+                <DockPanel Background="{StaticResource MaterialDesignPaper}">
+                    <Viewbox HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                        <Button x:Name="ClassModeButton" Margin="20" DataContext="{Binding ClassModeItem}" Content="{Binding Content}" Visibility="{Binding Visibility}" Command="{Binding Command}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding GotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                            <Button x:Name="ShareDocButton"  Margin="20" DataContext="{Binding ShareDocItem}" Content="{Binding Content}" Visibility="{Binding Visibility}" Command="{Binding Command}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding GotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                       </Button>
+                            <Button  x:Name="ManageListenersButton" Margin="20" DataContext="{Binding ManageListenersItem}" Content="{Binding Content}" Visibility="{Binding Visibility}" Command="{Binding Command}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding GotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                            <Button   x:Name="LayoutButton" Margin="20" DataContext="{Binding LayoutItem}"  Content="{Binding Content}" Visibility="{Binding Visibility}" Command="{Binding Command}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding GotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </Button>
+                            <Button x:Name="SpeakButton" Margin="20"  DataContext="{Binding SpeakItem}" Content="{Binding Content}" Visibility="{Binding Visibility}" Command="{Binding Command}" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="GotFocus">
+                                    <i:InvokeCommandAction Command="{Binding GotFocusCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorLevel=1,AncestorType=Button}}"></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                        </Button>
+                        </StackPanel>
+
+                    </Viewbox>
+                </DockPanel>
+            </Popup>
+        </Grid>
+    
+</mah:MetroWindow>

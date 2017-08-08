@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="St.Profile.ProfileContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:St.Profile"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" 
+             d:DesignWidth="500"
+             FontSize="18">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="1" Text="我的" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Left"></TextBlock>
+
+        <md:Card Grid.Row="1"
+                 Grid.Column="1"
+                 Margin="0 8 0 0"
+                 >
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                        <Setter Property="BorderThickness" Value="0"></Setter>
+                        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                        <Setter Property="Margin" Value="5"></Setter>
+                        <Setter Property="md:TextFieldAssist.DecorationVisibility" Value="Collapsed"></Setter>
+                        <Setter Property="BorderThickness" Value="0"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <DockPanel>
+                    <ListBox ItemsSource="{Binding Path=Pictures}" Padding="0" Width="160" Height="200" AllowDrop="True" Drop="DropBox_Drop" DragOver="DropBox_DragOver" DragLeave="DropBox_DragLeave" FontSize="10">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image Width="160" Source="{Binding}" VerticalAlignment="Top"></Image>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Button Command="{Binding LogoutCommand}"
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            HorizontalAlignment="Right" 
+                            Margin="5" 
+                            VerticalAlignment="Top"
+                            Visibility="{Binding LogoutVisibility}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Logout" Width="30" Height="30" VerticalAlignment="Center"></md:PackIcon>
+                            <TextBlock Text="注销" VerticalAlignment="Center" Margin="8 0 0 0"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
+
+                <StackPanel Grid.Row="1">
+                    <TextBox md:HintAssist.Hint="名 称"
+                             Text="{Binding NickName}"
+                             ></TextBox>
+
+                    <TextBox md:HintAssist.Hint="视讯号"
+                             Text="{Binding PhoneId}"
+                             IsReadOnly="True"
+                             >
+                        
+                    </TextBox>
+                    <TextBox md:HintAssist.Hint="手 机"
+                             Text="{Binding Mobile}"
+                             IsReadOnly="True"
+                             >
+
+                    </TextBox>
+                    <TextBox md:HintAssist.Hint="邮 箱"
+                             Text="{Binding Email}"
+                             IsReadOnly="True"
+                             >
+
+                    </TextBox>
+
+                </StackPanel>
+            </Grid>
+        </md:Card>
+        
+        
+        <md:Snackbar Grid.Row="2"
+                     Grid.Column="1"
+                     MessageQueue="{Binding MessageQueue}"
+                     Focusable="False"
+                     >
+        </md:Snackbar>
+
+    </Grid>
+
+</UserControl>
